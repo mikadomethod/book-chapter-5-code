@@ -11,7 +11,7 @@ import com.google.gson.Gson;
 public class LoanRepository {
 
     public final static String FILE_EXTENSION = ".loan";
-    public final static String REPOSITORY_ROOT = "/home/ola/loan";
+    public final static String REPOSITORY_ROOT = System.getProperty("user.dir") + "/loan";
 
     public static LoanApplication fetch(String ticketId) {
         return fetch(Long.parseLong(ticketId));
