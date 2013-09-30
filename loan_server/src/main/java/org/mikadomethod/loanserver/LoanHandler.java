@@ -15,10 +15,10 @@ import org.eclipse.jetty.server.handler.AbstractHandler;
 import com.google.gson.Gson;
 
 public class LoanHandler extends AbstractHandler {
-    private static final String APPLICATION = "apply";
-    private static final String FETCH = "fetch";
-    private static final String TICKET_ID = "ticketId";
-    private static final String APPROVE = "approve";
+    public static final String APPLICATION = "apply";
+    public static final String FETCH = "fetch";
+    public static final String TICKET_ID = "ticketId";
+    public static final String APPROVE = "approve";
 
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
