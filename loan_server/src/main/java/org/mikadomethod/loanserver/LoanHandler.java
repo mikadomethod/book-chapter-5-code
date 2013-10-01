@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 public class LoanHandler extends AbstractHandler {
     public static final String APPLICATION = "apply";
     public static final String FETCH = "fetch";
-    public static final String APPROVE = "approve";
 
     private final LoanRepository repo;
     
@@ -39,8 +38,6 @@ public class LoanHandler extends AbstractHandler {
                 writer.println(new Gson().toJson(ticket));
             } else if (isStatusRequest(request) && RequestHelper.idSpecified(request)) {
                 writer.println(fetchLoanInfo(request.getParameter(RequestHelper.TICKET_ID)));
-            } else if (isApproval(request) && RequestHelper.idSpecified(request)) {
-                writer.println(approveLoan(request.getParameter(RequestHelper.TICKET_ID)));
             } else {
                 writer.println("Incorrect parameters provided");
             }
@@ -55,14 +52,6 @@ public class LoanHandler extends AbstractHandler {
 
     private long amountFrom(HttpServletRequest request) {
         return Long.parseLong(request.getParameter("amount"));
-    }
-
-    private String approveLoan(String parameter) {
-        return new Gson().toJson(repo.approve(parameter));
-    }
-
-    private boolean isApproval(HttpServletRequest request) {
-        return APPROVE.equals(request.getParameter("action"));
     }
 
     private boolean isStatusRequest(HttpServletRequest request) {
