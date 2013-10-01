@@ -13,11 +13,11 @@ public class FileBasedLoanRepository {
     public final static String FILE_EXTENSION = ".loan";
     public final static String REPOSITORY_ROOT = System.getProperty("user.home") + "/loan";
 
-    public static LoanApplication fetch(String ticketId) {
+    public LoanApplication fetch(String ticketId) {
         return fetch(Long.parseLong(ticketId));
     }
 
-    public static LoanApplication fetch(long ticketId) {
+    public LoanApplication fetch(long ticketId) {
         File file = fileFromApplication(ticketId);
         try {
             String output = new Scanner(file).useDelimiter("\\Z").next();
@@ -27,7 +27,7 @@ public class FileBasedLoanRepository {
         }
     }
 
-    public static Ticket store(LoanApplication application) {
+    public Ticket store(LoanApplication application) {
         try {
             new File(REPOSITORY_ROOT).mkdirs();
             FileOutputStream fileOutputStream = new FileOutputStream(
@@ -46,7 +46,7 @@ public class FileBasedLoanRepository {
         return new File(REPOSITORY_ROOT + "/" + applicationNo + FILE_EXTENSION);
     }
 
-    public static Ticket approve(String ticketId) {
+    public Ticket approve(String ticketId) {
         LoanApplication application = fetch(ticketId);
         application.approve();
         store(application);
