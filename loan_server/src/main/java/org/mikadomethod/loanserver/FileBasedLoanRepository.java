@@ -32,6 +32,7 @@ public class FileBasedLoanRepository implements LoanRepository {
     @Override
 	public Ticket store(LoanApplication application) {
         try {
+        	application.setApplicationNo(getNextId());
             new File(REPOSITORY_ROOT).mkdirs();
             FileOutputStream fileOutputStream = new FileOutputStream(
                     fileFromApplication(application.getApplicationNo()));

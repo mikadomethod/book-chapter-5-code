@@ -50,7 +50,7 @@ public class LoanHandlerTest {
                 approveParams());
         loanHandler.handle(null, baseRequest, request, response);
         response.getWriter().flush();
-        assertEquals("{\"id\":0}\n", response.responseAsText());
+        assertEquals("{\"id\":1}\n", response.responseAsText());
     }
 
 
@@ -64,7 +64,7 @@ public class LoanHandlerTest {
         loanHandler.handle(null, baseRequest, request, response);
         response.getWriter().flush();
 
-        assertEquals("{\"applicationNo\":0," + "\"amount\":100,"
+        assertEquals("{\"applicationNo\":1," + "\"amount\":100,"
                 + "\"contact\":\"donald@ducks.burg\",\"approved\":false}\n",
                 response.responseAsText());
     }

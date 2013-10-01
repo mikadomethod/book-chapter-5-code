@@ -10,6 +10,7 @@ public class MemoryLoanRepository implements LoanRepository {
     @Override
     public Ticket store(LoanApplication application) {
         int nextId = nextId();
+        application.setApplicationNo(nextId);
         applications.put(nextId + "", application);
         return new Ticket(nextId);
     }
