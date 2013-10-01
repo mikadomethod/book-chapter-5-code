@@ -17,7 +17,7 @@ public class LoanHandlerTest {
 
     @Before
     public void setUp() {
-        loanHandler = new LoanHandler(new FileBasedLoanRepository());
+        loanHandler = new LoanHandler(new MemoryLoanRepository());
         baseRequest = new RequestStub();
         response = new ResponseStub();
     }
@@ -38,11 +38,14 @@ public class LoanHandlerTest {
         ServletRequestStub request = new ServletRequestStub(applyParams());
         loanHandler.handle(null, baseRequest, request, response);
         response.getWriter().flush();
-        assertEquals("{\"id\":0}\n", response.responseAsText());
+        assertEquals("{\"id\":1}\n", response.responseAsText());
     }
 
     @Test
     public void loanApplicationsCanBeApproved() throws Exception {
+        ServletRequestStub apply = new ServletRequestStub(
+                applyParams());
+        loanHandler.handle(null, baseRequest, apply, new ResponseStub());
         ServletRequestStub request = new ServletRequestStub(
                 approveParams());
         loanHandler.handle(null, baseRequest, request, response);
@@ -53,7 +56,11 @@ public class LoanHandlerTest {
 
     @Test
     public void givenAnIdTheStatusOfLoanIsReturned() throws Exception {
-        ServletRequestStub request = new ServletRequestStub(fetchParams());
+    	ServletRequestStub apply = new ServletRequestStub(applyParams());
+        loanHandler.handle(null, baseRequest, apply, new ResponseStub());
+    	
+        response = new ResponseStub();
+    	ServletRequestStub request = new ServletRequestStub(fetchParams());
         loanHandler.handle(null, baseRequest, request, response);
         response.getWriter().flush();
 
@@ -65,7 +72,7 @@ public class LoanHandlerTest {
     private HashMap<String, String> approveParams() {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("action", LoanHandler.APPROVE);
-        params.put("ticketId", "0");
+        params.put("ticketId", "1");
         return params;
     }
 
@@ -80,7 +87,7 @@ public class LoanHandlerTest {
     private HashMap<String, String> fetchParams() {
         HashMap<String, String> params = new HashMap<String, String>();
         params.put("action", LoanHandler.FETCH);
-        params.put("ticketId", "0");
+        params.put("ticketId", "1");
         return params;
     }
 }
