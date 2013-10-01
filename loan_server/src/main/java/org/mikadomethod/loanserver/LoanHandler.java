@@ -32,7 +32,7 @@ public class LoanHandler extends AbstractHandler {
                 LoanApplication application = new LoanApplication();
                 application.setAmount(amountFrom(request));
                 application.setContact(contactFrom(request));
-                Ticket ticket = LoanRepository.store(application);
+                Ticket ticket = FileBasedLoanRepository.store(application);
                 writer.println(new Gson().toJson(ticket));
             } else if (isStatusRequest(request) && idSpecified(request)) {
                 writer.println(fetchLoanInfo(request.getParameter(TICKET_ID)));
@@ -55,7 +55,7 @@ public class LoanHandler extends AbstractHandler {
     }
 
     private String approveLoan(String parameter) {
-        return new Gson().toJson(LoanRepository.approve(parameter));
+        return new Gson().toJson(FileBasedLoanRepository.approve(parameter));
     }
 
     private boolean isApproval(HttpServletRequest request) {
@@ -84,16 +84,16 @@ public class LoanHandler extends AbstractHandler {
     }
 
     private String fetchLoanInfo(String ticketId) {
-        LoanApplication formerApplication = LoanRepository.fetch(ticketId);
+        LoanApplication formerApplication = FileBasedLoanRepository.fetch(ticketId);
         return new Gson().toJson(formerApplication);
     }
 
     public static long getNextId() {
-        File file = new File(LoanRepository.REPOSITORY_ROOT);
+        File file = new File(FileBasedLoanRepository.REPOSITORY_ROOT);
         File[] files = file.listFiles(new FileFilter() {
             @Override
             public boolean accept(File pathname) {
-                return pathname.getName().endsWith(LoanRepository.FILE_EXTENSION);
+                return pathname.getName().endsWith(FileBasedLoanRepository.FILE_EXTENSION);
             }
         });
 

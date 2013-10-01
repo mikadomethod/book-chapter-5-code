@@ -8,7 +8,7 @@ import java.util.Scanner;
 
 import com.google.gson.Gson;
 
-public class LoanRepository {
+public class FileBasedLoanRepository {
 
     public final static String FILE_EXTENSION = ".loan";
     public final static String REPOSITORY_ROOT = System.getProperty("user.home") + "/loan";
