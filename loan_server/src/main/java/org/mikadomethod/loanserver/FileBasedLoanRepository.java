@@ -8,12 +8,13 @@ import java.util.Scanner;
 
 import com.google.gson.Gson;
 
-public class FileBasedLoanRepository {
+public class FileBasedLoanRepository implements LoanRepository {
 
     public final static String FILE_EXTENSION = ".loan";
     public final static String REPOSITORY_ROOT = System.getProperty("user.home") + "/loan";
 
-    public LoanApplication fetch(String ticketId) {
+    @Override
+	public LoanApplication fetch(String ticketId) {
         return fetch(Long.parseLong(ticketId));
     }
 
@@ -27,7 +28,8 @@ public class FileBasedLoanRepository {
         }
     }
 
-    public Ticket store(LoanApplication application) {
+    @Override
+	public Ticket store(LoanApplication application) {
         try {
             new File(REPOSITORY_ROOT).mkdirs();
             FileOutputStream fileOutputStream = new FileOutputStream(
@@ -46,7 +48,8 @@ public class FileBasedLoanRepository {
         return new File(REPOSITORY_ROOT + "/" + applicationNo + FILE_EXTENSION);
     }
 
-    public Ticket approve(String ticketId) {
+    @Override
+	public Ticket approve(String ticketId) {
         LoanApplication application = fetch(ticketId);
         application.approve();
         store(application);
