@@ -20,6 +20,8 @@ public class LoanHandler extends AbstractHandler {
     public static final String TICKET_ID = "ticketId";
     public static final String APPROVE = "approve";
 
+    private final FileBasedLoanRepository repo = new FileBasedLoanRepository();
+    
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
             throws IOException, ServletException {
@@ -32,7 +34,7 @@ public class LoanHandler extends AbstractHandler {
                 LoanApplication application = new LoanApplication();
                 application.setAmount(amountFrom(request));
                 application.setContact(contactFrom(request));
-                Ticket ticket = FileBasedLoanRepository.store(application);
+                Ticket ticket = repo.store(application);
                 writer.println(new Gson().toJson(ticket));
             } else if (isStatusRequest(request) && idSpecified(request)) {
                 writer.println(fetchLoanInfo(request.getParameter(TICKET_ID)));
@@ -55,7 +57,7 @@ public class LoanHandler extends AbstractHandler {
     }
 
     private String approveLoan(String parameter) {
-        return new Gson().toJson(FileBasedLoanRepository.approve(parameter));
+        return new Gson().toJson(repo.approve(parameter));
     }
 
     private boolean isApproval(HttpServletRequest request) {
@@ -84,7 +86,7 @@ public class LoanHandler extends AbstractHandler {
     }
 
     private String fetchLoanInfo(String ticketId) {
-        LoanApplication formerApplication = FileBasedLoanRepository.fetch(ticketId);
+        LoanApplication formerApplication = repo.fetch(ticketId);
         return new Gson().toJson(formerApplication);
     }
 
