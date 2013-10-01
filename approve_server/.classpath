@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7"/>
+	<classpathentry kind="lib" path="/loan_server/lib/servlet-api-3.0.jar"/>
+	<classpathentry kind="lib" path="/loan_server/lib/jetty-all-8.1.7.v20120910.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/loan_core"/>
+	<classpathentry kind="lib" path="/loan_server/lib/gson-2.2.2.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>
