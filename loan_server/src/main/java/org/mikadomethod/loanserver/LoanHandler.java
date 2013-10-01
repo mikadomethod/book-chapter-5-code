@@ -20,7 +20,11 @@ public class LoanHandler extends AbstractHandler {
     public static final String TICKET_ID = "ticketId";
     public static final String APPROVE = "approve";
 
-    private final LoanRepository repo = new FileBasedLoanRepository();
+    private final LoanRepository repo;
+    
+    public LoanHandler(LoanRepository loanRepository) {    	
+    	repo = loanRepository;
+    }
     
     @Override
     public void handle(String target, Request baseRequest, HttpServletRequest request, HttpServletResponse response)
