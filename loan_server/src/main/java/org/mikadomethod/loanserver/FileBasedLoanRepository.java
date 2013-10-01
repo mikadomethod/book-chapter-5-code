@@ -1,6 +1,7 @@
 package org.mikadomethod.loanserver;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -55,5 +56,17 @@ public class FileBasedLoanRepository implements LoanRepository {
         store(application);
         return new Ticket(application.getApplicationNo());
     }
+
+	public static long getNextId() {
+	    File file = new File(REPOSITORY_ROOT);
+	    File[] files = file.listFiles(new FileFilter() {
+	        @Override
+	        public boolean accept(File pathname) {
+	            return pathname.getName().endsWith(FILE_EXTENSION);
+	        }
+	    });
+	
+	    return files == null ? 0 : files.length + 1;
+	}
 
 }

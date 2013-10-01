@@ -9,7 +9,7 @@ public class LoanApplication {
     private boolean approved;
 
     public LoanApplication() {
-        applicationNo = LoanHandler.getNextId();
+        applicationNo = FileBasedLoanRepository.getNextId();
     }
 
     public long getAmount() {

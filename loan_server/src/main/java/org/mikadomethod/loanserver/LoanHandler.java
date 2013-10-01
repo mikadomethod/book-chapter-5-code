@@ -1,7 +1,5 @@
 package org.mikadomethod.loanserver;
 
-import java.io.File;
-import java.io.FileFilter;
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -92,18 +90,6 @@ public class LoanHandler extends AbstractHandler {
     private String fetchLoanInfo(String ticketId) {
         LoanApplication formerApplication = repo.fetch(ticketId);
         return new Gson().toJson(formerApplication);
-    }
-
-    public static long getNextId() {
-        File file = new File(FileBasedLoanRepository.REPOSITORY_ROOT);
-        File[] files = file.listFiles(new FileFilter() {
-            @Override
-            public boolean accept(File pathname) {
-                return pathname.getName().endsWith(FileBasedLoanRepository.FILE_EXTENSION);
-            }
-        });
-
-        return files == null ? 0 : files.length + 1;
     }
 
 }
