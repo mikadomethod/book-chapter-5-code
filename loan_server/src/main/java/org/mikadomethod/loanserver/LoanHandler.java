@@ -15,7 +15,6 @@ import com.google.gson.Gson;
 public class LoanHandler extends AbstractHandler {
     public static final String APPLICATION = "apply";
     public static final String FETCH = "fetch";
-    public static final String TICKET_ID = "ticketId";
     public static final String APPROVE = "approve";
 
     private final LoanRepository repo;
@@ -38,10 +37,10 @@ public class LoanHandler extends AbstractHandler {
                 application.setContact(contactFrom(request));
                 Ticket ticket = repo.store(application);
                 writer.println(new Gson().toJson(ticket));
-            } else if (isStatusRequest(request) && idSpecified(request)) {
-                writer.println(fetchLoanInfo(request.getParameter(TICKET_ID)));
-            } else if (isApproval(request) && idSpecified(request)) {
-                writer.println(approveLoan(request.getParameter(TICKET_ID)));
+            } else if (isStatusRequest(request) && RequestHelper.idSpecified(request)) {
+                writer.println(fetchLoanInfo(request.getParameter(RequestHelper.TICKET_ID)));
+            } else if (isApproval(request) && RequestHelper.idSpecified(request)) {
+                writer.println(approveLoan(request.getParameter(RequestHelper.TICKET_ID)));
             } else {
                 writer.println("Incorrect parameters provided");
             }
@@ -64,19 +63,6 @@ public class LoanHandler extends AbstractHandler {
 
     private boolean isApproval(HttpServletRequest request) {
         return APPROVE.equals(request.getParameter("action"));
-    }
-
-    private boolean idSpecified(HttpServletRequest request) {
-        return request.getParameter(TICKET_ID) != null && validId(request) >= 0;
-    }
-
-    private long validId(HttpServletRequest request) {
-        String ticketId = request.getParameter(TICKET_ID);
-        try {
-            return Long.parseLong(ticketId);
-        } catch (NumberFormatException e) {
-            return -1L;
-        }
     }
 
     private boolean isStatusRequest(HttpServletRequest request) {
