@@ -58,7 +58,7 @@ public class FileBasedLoanRepository implements LoanRepository {
         return new Ticket(application.getApplicationNo());
     }
 
-	public static long getNextId() {
+	private static long getNextId() {
 	    File file = new File(REPOSITORY_ROOT);
 	    File[] files = file.listFiles(new FileFilter() {
 	        @Override
