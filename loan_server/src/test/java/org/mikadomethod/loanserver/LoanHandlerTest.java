@@ -42,19 +42,6 @@ public class LoanHandlerTest {
     }
 
     @Test
-    public void loanApplicationsCanBeApproved() throws Exception {
-        ServletRequestStub apply = new ServletRequestStub(
-                applyParams());
-        loanHandler.handle(null, baseRequest, apply, new ResponseStub());
-        ServletRequestStub request = new ServletRequestStub(
-                approveParams());
-        loanHandler.handle(null, baseRequest, request, response);
-        response.getWriter().flush();
-        assertEquals("{\"id\":1}\n", response.responseAsText());
-    }
-
-
-    @Test
     public void givenAnIdTheStatusOfLoanIsReturned() throws Exception {
     	ServletRequestStub apply = new ServletRequestStub(applyParams());
         loanHandler.handle(null, baseRequest, apply, new ResponseStub());
@@ -67,13 +54,6 @@ public class LoanHandlerTest {
         assertEquals("{\"applicationNo\":1," + "\"amount\":100,"
                 + "\"contact\":\"donald@ducks.burg\",\"approved\":false}\n",
                 response.responseAsText());
-    }
-
-    private HashMap<String, String> approveParams() {
-        HashMap<String, String> params = new HashMap<String, String>();
-        params.put("action", LoanHandler.APPROVE);
-        params.put("ticketId", "1");
-        return params;
     }
 
     private HashMap<String, String> applyParams() {
