@@ -8,5 +8,6 @@
 	<classpathentry kind="lib" path="lib/servlet-api-3.0.jar"/>
 	<classpathentry kind="lib" path="lib/junit-4.11.jar"/>
 	<classpathentry kind="lib" path="lib/hamcrest-core-1.3.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/loan_core"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
