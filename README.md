@@ -13,3 +13,7 @@ Retrieve all branches
 for remote in `git branch -r`; do git branch --track $remote; done
 git pull --all
 ````
+
+## License
+Copyright (c) 2013 Daniel Brolund & Ola Ellnestam  
+Licensed under the MIT license.
